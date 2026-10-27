@@ -17,6 +17,8 @@ I use AI to help write the code and tests. I run everything myself, read every r
 | SSH config checker | Reads an `sshd_config` file and flags risky settings such as root login and weak ciphers | 41 | [sshd-config-checker](https://github.com/twistedsol/sshd-config-checker) |
 | Dockerfile checker | Reads Dockerfiles and flags running as root, secrets in the file and `curl \| sh`, with line numbers | 46 | [dockerfile-checker](https://github.com/twistedsol/dockerfile-checker) |
 | Workflow checker | Reads GitHub Actions workflows and flags loose permissions, unpinned actions and injection risks, with line numbers, and checks its own workflow | 51 | [workflow-checker](https://github.com/twistedsol/workflow-checker) |
+| Docker Compose checker | Reads docker-compose files and flags privileged containers, the Docker socket, public database ports and hardcoded secrets, with line numbers | 76 | [compose-checker](https://github.com/twistedsol/compose-checker) |
+| Kubernetes manifest checker | Reads Kubernetes files and flags privileged containers, host mounts, running as root, missing limits and hardcoded secrets, with line numbers | 61 | [k8s-checker](https://github.com/twistedsol/k8s-checker) |
 
 Planned: a lab that sends real cloud audit logs from a free-tier account into alerts. It needs a cloud account, so it is not built yet.
 
