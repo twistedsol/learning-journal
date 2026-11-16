@@ -19,12 +19,13 @@ I use AI to help write the code and tests. I run everything myself, read every r
 | Workflow checker | Reads GitHub Actions workflows and flags loose permissions, unpinned actions and injection risks, with line numbers, and checks its own workflow | 51 | [workflow-checker](https://github.com/twistedsol/workflow-checker) |
 | Docker Compose checker | Reads docker-compose files and flags privileged containers, the Docker socket, public database ports and hardcoded secrets, with line numbers | 76 | [compose-checker](https://github.com/twistedsol/compose-checker) |
 | Kubernetes manifest checker | Reads Kubernetes files and flags privileged containers, host mounts, running as root, missing limits and hardcoded secrets, with line numbers | 61 | [k8s-checker](https://github.com/twistedsol/k8s-checker) |
+| Cloud audit alerts (AWS) | Emails an alert within about a minute when an S3 bucket is created, a bucket policy is changed or public access protection is removed, using CloudTrail, EventBridge and SNS | none (console build, tested live) | [cloud-audit-alerts](https://github.com/twistedsol/cloud-audit-alerts) |
 
-Planned: a lab that sends real cloud audit logs from a free-tier account into alerts. It needs a cloud account, so it is not built yet.
+Cloud audit alerts is different from the rest: it is built in the AWS console, not in code, and it connects to a live cloud account. So it has no automated tests. I tested it by creating a bucket and checking that the alert email arrived.
 
 ## What they have in common
 
-- They only read files. None of them connects to a server or changes anything.
+- The code labs only read files. None of them connects to a server or changes anything.
 - Same command line: `--format json`, `--min-severity`, `--fail-on`, and exit codes 0 (clean), 1 (findings) and 2 (bad input).
 - Sample files: a risky one, an "okay but with gaps" one, and a hardened one.
 - Tests run on Python 3.10 and 3.12 on every push.
