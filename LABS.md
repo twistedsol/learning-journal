@@ -20,6 +20,7 @@ I use AI to help write the code and tests. I run everything myself, read every r
 | Docker Compose checker | Reads docker-compose files and flags privileged containers, the Docker socket, public database ports and hardcoded secrets, with line numbers | 76 | [compose-checker](https://github.com/twistedsol/compose-checker) |
 | Kubernetes manifest checker | Reads Kubernetes files and flags privileged containers, host mounts, running as root, missing limits and hardcoded secrets, with line numbers | 61 | [k8s-checker](https://github.com/twistedsol/k8s-checker) |
 | Cloud audit alerts (AWS) | Emails an alert within about a minute when an S3 bucket is created, a bucket policy is changed or public access protection is removed, using CloudTrail, EventBridge and SNS | none (console build, tested live) | [cloud-audit-alerts](https://github.com/twistedsol/cloud-audit-alerts) |
+| Terraform S3 scan (AWS) | Scans a deliberately careless Terraform S3 bucket with Checkov, fixes it, and scans again: 6 passed and 8 failed before, 16 passed and 4 failed after. Never deployed | none (Checkov scan before and after) | [terraform-s3-lab](https://github.com/twistedsol/terraform-s3-lab) |
 
 Cloud audit alerts is different from the rest: it is built in the AWS console, not in code, and it connects to a live cloud account. So it has no automated tests. I tested it by creating a bucket and checking that the alert email arrived.
 
