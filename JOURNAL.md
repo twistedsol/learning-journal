@@ -40,3 +40,52 @@ Newest entries at the bottom.
 
 **Next**
 - Write up the lab in its own repo and update the Labs card on my site.
+
+----
+
+## Nov 8 to 16: Cloud audit alerts (AWS)
+
+**What I did**
+- Built an alert chain in AWS: CloudTrail records activity, an EventBridge rule spots risky S3 changes, and SNS emails me.
+- The rule watches for a bucket being created, a bucket policy being changed, or public access protection being removed.
+- Tested it by creating a bucket. The alert email arrived in about a minute and showed what happened, who did it, when, and from which IP address.
+- Deleted the test buckets afterwards.
+
+**Result**
+- I could not find the first alert email, so I checked each link instead of guessing. The rule's Monitoring tab showed 1 matched event, 1 invocation and no failed invocations, and a manual test message from SNS reached my inbox. A second test bucket then produced the alert.
+
+**What I learned**
+- A detection pipeline is a chain. When it is silent, test each link in turn.
+- The Monitoring graphs show the last week by default, so an older event looks like "No data" until the date range is widened.
+- The newer EventBridge builder is drag and drop. The Advanced builder shows every setting, which is easier for a first rule.
+- The alert email contains the account ID and IP address, so I redact them before sharing anything.
+- My free-plan account does not support some services, such as Security Hub, so I check what is allowed before planning around it.
+
+**Next**
+- Scan and harden Terraform code for the same kind of resource.
+
+---
+
+## Nov 17: Terraform S3 scan
+
+**What I did**
+- Wrote a deliberately careless S3 bucket in Terraform, with a public-read ACL. It was never deployed to AWS.
+- Scanned it with Checkov, fixed it in a copy, and scanned again.
+- Fixed the public ACL, added a public access block and versioning, and encrypted the bucket with a KMS key that has a key policy.
+- Published it as the repo terraform-s3-lab and added it to the Labs page.
+
+**Result**
+- Before: 6 passed, 8 failed.
+- After: 16 passed, 4 failed.
+- Left on purpose: access logging, event notifications, a lifecycle rule, and cross-region replication.
+
+**What I learned**
+- Fixing one problem can create a new finding. The KMS key fixed encryption, then failed its own check until it had a policy.
+- A scan counts rules, not safety. A high pass count does not mean a bucket is secure.
+- Check which file I am editing before I paste. I pasted the fix into the original once, and the unchanged scan numbers showed it.
+- Check the file size after a change. An unexpectedly small file means something was overwritten.
+- GitHub adds "(1)" to an uploaded file name when the same name already exists on my computer, so I rename it with the edit pencil.
+
+**Next**
+- Install Terraform and run validate and plan on the fixed file.
+- Run the Checkov scan in GitHub Actions, like my other labs. 
